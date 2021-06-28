@@ -1,0 +1,15 @@
+{% extends 'Inventory/base.html' %}
+{% block title %}
+Add
+{% endblock %}
+{% block content %}
+<form method="post">
+    <h1>New amount you want to add to {{ queryset.name }}.</h1>
+    {% csrf_token %}
+    <label>Amount: {{ form.amount_to_add }}</label>
+    <label>Price: {{ form.update_price }}</label>
+    <input type="submit" value="Add"/>
+    <button><a class="cancel" href="{% url 'ingredientlist' %}">Cancel</a></button>
+</form>
+
+{% endblock %}

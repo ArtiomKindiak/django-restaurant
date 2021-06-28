@@ -1,0 +1,15 @@
+{% extends 'Inventory/base.html' %}
+
+{% block title %}
+{{ menuitem.title }}
+{% endblock %}
+
+{% block content %}
+<h1>Are you sure you want to delete {{ menuitem.title }}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Submit"/>
+    <button><a class="cancel" href="{% url 'menuitemlist' %}">Cancel</a></button>
+</form>
+
+{% endblock %}

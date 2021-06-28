@@ -1,0 +1,42 @@
+{% extends 'Inventory/base.html' %}
+
+{% block title %}
+Ingredients
+{% endblock %}
+
+{% block content %}
+    <div class="table-name">
+        <h1 class="ingredients">List of Ingredients</h1>
+        <a href="{% url 'ingredientcreate' %}">Add new Ingredient</a>
+    </div>
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Total Price</th>
+                    <th class="last_update">Last Update</th>
+                    <th>Add</th>
+                    <th>Delete</th>
+                    <th>Change</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for i in ingredient_list %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.quantity }}</td>
+                    <td>{{ i.unit }}</td>
+                    <td class="price">€{{ i.unit_price }}</td>
+                    <td class="total-price">€{{ i.total_price|stringformat:".2f" }}</td>
+                    <td class="last_update">{{ i.last_update }}</td>
+                    <td class="add"><a href="{% url 'ingredientadd' i.pk %}">➕</a></td>
+                    <td class="delete"><a href="{% url 'ingredientdelete' i.pk %}">❌</a></td>
+                    <td><a href="{% url 'ingredientupdate' i.pk %}">Change</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}

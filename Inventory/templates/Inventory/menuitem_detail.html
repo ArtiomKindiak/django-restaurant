@@ -1,0 +1,36 @@
+{% extends 'Inventory/base.html' %}
+
+{% block title %}
+{{ obj.title }}
+{% endblock %}
+
+{% block content %}
+<div class="table-name">
+        <h1>{{ obj.title }} Recipe Requirements</h1>
+        <a href="{% url 'addrecipe' obj.pk %}">Add/Delete Recipe Requirement</a>
+    </div>
+<table class="content-table">
+    <thead>
+        <tr>
+            <th>Ingredient</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for recipe in queryset %}
+        <tr>
+            <td>{{ recipe.ingredient.name }}</td>
+            <td>{{ recipe.quantity }} {{ recipe.ingredient.unit }}</td>
+            <td>€{{ recipe.cost|stringformat:".2f" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+ <hr/>
+    <div class="Totals">
+    <h2>Totals</h2>
+    <div>Total Quantity: {{ total_quantity|stringformat:".3f" }}</div>
+    <div>Total Cost: €{{ total_cost|stringformat:".2f" }}</div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'Inventory/base.html' %}
+
+{% block title %}
+Delete
+{% endblock %}
+
+{% block content %}
+<h1>Are you sure you want to delete purchase #{{ object.id }}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete"/>
+    <button><a class="cancel" href="{% url 'purchases' %}">Cancel</a></button>
+</form>
+
+{% endblock %}

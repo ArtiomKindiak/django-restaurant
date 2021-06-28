@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="{% static 'Inventory/style.css' %}" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>{% block title %}AK App{% endblock %}</title>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="app">
+  <header>
+    <div class="header-first-row">
+      <h1 class="title">AK Restaurant Management App</h1>
+      {% if user.is_authenticated %}
+      <a class="logout" href="{% url 'logout' %}">Logout</a>
+      {% endif %}
+    </div>
+      {% if user.is_authenticated %}
+      <h2>Hi, {{ user.username }}!</h2>
+        {% url 'home' as home_url %}
+        {% url 'ingredientlist' as ingredientlist_url %}
+        {% url 'menuitemlist' as menuitemlist_url %}
+        {% url 'purchases' as purchases_url %}
+        {% url 'reports' as reports_url %}
+      <nav class="navbar">
+        <a class="nav-item {% if request.path == home_url %} current-page {% endif %}" href="{% url 'home' %}">Home</a>
+        <a class="nav-item {% if request.path == ingredientlist_url %} current-page {% endif %}" href="{% url 'ingredientlist' %}">Ingredients</a>
+        <a class="nav-item {% if request.path == menuitemlist_url %} current-page {% endif %}" href="{% url 'menuitemlist' %}">Menu</a>
+        <a class="nav-item {% if request.path == purchases_url %} current-page {% endif %}" href="{% url 'purchases' %}">Purchases</a>
+        <a class="nav-item {% if request.path == reports_url %} current-page {% endif %}" href="{% url 'reports' %}">Daily Reports</a>
+      </nav>
+      {% endif %}
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  </div>
+</body>
+</html>

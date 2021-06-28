@@ -1,0 +1,40 @@
+{% extends 'Inventory/base.html' %}
+{% block title %}
+Daily report
+{% endblock %}
+{% block content %}
+    {% if purchases %}
+    <h2>Purchases {{ date }}</h2>
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Menu Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        {% endif %}
+        <tbody>
+        {% for purchase in purchases %}
+            <tr>
+                <td>{{ purchase.menu_item.title }}</td>
+                <td>{{ purchase.quantity }}</td>
+                <td class="price">€{{ purchase.total_sum|stringformat:".2f" }}</td>
+                <td>{{ purchase.timestamp }}</td>
+            </tr>
+        {% empty %}
+        <div class="sorry">Sorry, there are no purchases at the moment! :(</div>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if purchases %}
+    <hr/>
+    <div class="Totals">
+    <h2>Totals</h2>
+    <div>Total Revenue: €{{ revenue|stringformat:".2f" }}</div>
+    <div>Total Cost: €{{ total_cost|stringformat:".2f" }}</div>
+    <div>Total Profit: €{{ profit|stringformat:".2f" }}</div>
+    </div>
+    {% endif %}
+{% endblock %}

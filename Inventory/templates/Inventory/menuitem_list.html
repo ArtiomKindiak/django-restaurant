@@ -1,0 +1,39 @@
+{% extends 'Inventory/base.html' %}
+
+{% block title %}
+Menu
+{% endblock %}
+
+{% block content %}
+<div class="table-name">
+        <h1 class="menu">Menu</h1>
+        <a href="{% url 'menuitemcreate' %}">Create new dish</a>
+    </div>
+<table class="content-table">
+    <thead>
+    <tr>
+        <th>Menu Item</th>
+        <th>Price</th>
+        <th>Food Cost</th>
+        <th>FC %</th>
+        <th>Update</th>
+        <th>Delete</th>
+        <th>Recipe</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in menuitem_list %}
+    <tr>
+        <td>{{ item.title }}</td>
+        <td>€{{ item.price }}</td>
+        <td>€{{ item.absolute_cost|stringformat:".2f" }}</td>
+        <td>{{ item.food_cost|stringformat:"d%%" }}</td>
+        <td><a href="{% url 'menuitemupdate' item.pk %}">Change</a></td>
+        <td><a href="{% url 'menuitemdelete' item.pk %}">❌</a> </td>
+        <td><a href="{% url 'menuitemdetail' item.pk %}">Recipe</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

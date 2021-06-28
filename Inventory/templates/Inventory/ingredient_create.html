@@ -1,0 +1,12 @@
+{% extends 'Inventory/base.html' %}
+{% block title %}
+Create ingredient
+{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit"/>
+    <button><a class="cancel" href="{% url 'ingredientlist' %}">Cancel</a></button>
+</form>
+{% endblock %}

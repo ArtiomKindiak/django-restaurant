@@ -1,0 +1,82 @@
+{% extends 'Inventory/base.html' %}
+
+{% block content %}
+<div class="home-reports">
+    <div class="current-month">
+        <h1>Month {{ current_date|date:"F" }} Sales</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu Item</th>
+                    <th>Quantity</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for sale in monthly_sales|dictsortreversed:"sales_by_item" %}
+            <tr>
+                <td>{{ sale.menu_item__title }}</td>
+                <td>{{ sale.sales_by_item }} </td>
+                <td>€{{ sale.price|stringformat:".2f" }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="current-year">
+        <h1>Year {{ current_date.year }} Sales</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Menu Item</th>
+                    <th>Quantity</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for sale_yerr in yearly_sales|dictsortreversed:"sales_by_item_yearly" %}
+                <tr>
+                    <td>{{ sale_yerr.menu_item__title }}</td>
+                    <td>{{ sale_yerr.sales_by_item_yearly }}</td>
+                    <td>€{{ sale_yerr.y_price|stringformat:".2f" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="shortage">
+        <h1>Ingredients in shortage</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for ingredient in ingredients|dictsort:"quantity" %}
+                <tr>
+                    <td>{{ ingredient.name }}</td>
+                    <td>{{ ingredient.quantity }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<hr/>
+<div class="home-totals-1">
+    <div class="home-totals">
+        <h1>Totals / {{ current_date|date:"F" }}</h1>
+            <p>Total Revenue: €{{ monthly_revenue|stringformat:".2f" }}</p>
+            <p>Total Cost: €{{ monthly_cost|stringformat:".2f" }}</p>
+            <p style="color: white; font-weight:bold">Total Gross Profit: €{{ monthly_profit|stringformat:".2f" }}</p>
+    </div>
+    <div class="home-totals">
+        <h1>Totals / year {{ current_date.year }}</h1>
+        <p>Total Revenue: €{{ yearly_revenue|stringformat:".2f" }}</p>
+        <p>Total Cost: €{{ yearly_cost|stringformat:".2f" }}</p>
+        <p style="color: white; font-weight: bold">Total Gross Profit: €{{ yearly_profit|stringformat:".2f" }}</p>
+    </div>
+</div>
+{% endblock %}

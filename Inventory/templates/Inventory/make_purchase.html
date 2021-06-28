@@ -1,0 +1,26 @@
+{% extends 'Inventory/base.html' %}
+
+{% block content %}
+    <h2>Enter a new purchase</h2>
+    <form method="post">
+    <div>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>
+        <label for="menu_item">Menu item:</label>
+        <select name="menu_item" id="menu_item" required>
+            <option value selected>-----</option>
+        {% for menu_item in menu_items %}
+            <option value={{ menu_item.id }}>{{ menu_item.title }}</option>
+        {% endfor %}
+        </select>
+    </p>
+        <p>
+            <label for="quantity">Quantity:</label>
+            <input name="quantity" id="quantity" type="number" step="1">
+        </p>
+    <input type="submit" value="Submit"/>
+        <button><a class="cancel" href="{% url 'purchases' %}">Cancel</a></button>
+    </div>
+    </form>
+{% endblock %}
